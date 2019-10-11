@@ -11,6 +11,9 @@ def stack_operation(stack_commands):
     :type stack_commands: list
     :return: List of outputs from commands.
     :rtype: list
+
+    JS: max(nazwa stosu)
+    odpowiedź: lista wywołań showmax
     """
     pass
 

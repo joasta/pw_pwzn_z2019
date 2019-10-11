@@ -7,6 +7,8 @@ def unique(values):
     :type values: list
     :return: Unique values in order of appear.
     :rtype: list
+
+    JS: wywołać w kolejności wystąpienia na liście, bez sortowania
     """
     pass
 
