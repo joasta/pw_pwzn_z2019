@@ -8,7 +8,16 @@ def count_letters(msg):
     :return: Most frequent pair char - count in message.
     :rtype: list
     """
-    pass
+    mess=sorted(set(msg))
+    krotka=(0,0)
+    for elem in mess:
+        a=0
+        for letter in msg:
+            if letter == elem:
+                a+=1
+        if a > krotka[1]:
+            krotka=(elem,a)
+    return krotka
 
 
 if __name__ == '__main__':

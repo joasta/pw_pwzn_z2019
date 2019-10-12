@@ -14,7 +14,12 @@ def counting_sort(values, _max, _min=0):
     :type _min: int
     :return:
     """
-    pass
+    result=[]
+    for elem in range(_min, _max):
+        for ele in values:
+            if ele==elem:
+                result.append(ele)
+    return result
 
 
 if __name__ == '__main__':

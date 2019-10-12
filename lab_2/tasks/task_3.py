@@ -10,7 +10,8 @@ def unique(values):
 
     JS: wywołać w kolejności wystąpienia na liście, bez sortowania
     """
-    pass
+    val=dict.fromkeys(values)
+    return list(val.keys())
 
 
 if __name__ == "__main__":

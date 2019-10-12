@@ -11,11 +11,18 @@ def stack_operation(stack_commands):
     :type stack_commands: list
     :return: List of outputs from commands.
     :rtype: list
-
-    JS: max(nazwa stosu)
-    odpowiedź: lista wywołań showmax
     """
-    pass
+    stack=[]
+    result=[]
+    for elem in stack_commands:
+        if elem[0] == "push":
+            stack.append(elem[1])
+        elif elem[0] == "pop":
+            stack.pop()
+        elif elem[0] == "show_max":
+            print(max(stack))
+            result.append(max(stack))
+    return result
 
 
 if __name__ == "__main__":
