@@ -13,7 +13,8 @@ def parse_input(input):
     :rtype: list
     """
     lines_list = input.strip().splitlines()
-    lines_list = list(map(lambda x: list(map(lambda y: int(y), x.split())), lines_list))
+    lines_list = list(map(lambda x: x.split(), lines_list))
+    lines_list = list(map(lambda x: list(map(int, x)), lines_list))
     return lines_list
 
 
@@ -29,5 +30,4 @@ _input = """
 
 
 """
-
 assert parse_input(_input) == [[1, 5], [1, 6], [3, 2], [1, 10], [1, 10], [1, 6], [2, 5], [3, 2]]
