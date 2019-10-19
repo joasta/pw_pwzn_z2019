@@ -1,3 +1,6 @@
+from lab_3.tasks.task_1 import parse_input
+from collections import Counter
+
 def check_frequency(input):
     """
     Perform counting based on input queries and return queries result.
@@ -15,7 +18,18 @@ def check_frequency(input):
     :return: list of integers with results of operation 3
     :rtype: list
     """
-    pass
+    cnt = Counter()
+    input_list = parse_input(input)
+    result = []
+    for elem in input_list:
+        if elem[0] == 1:
+            cnt[elem[1]] += 1
+        elif elem[0] == 2:
+            cnt[elem[1]] -= 1
+            cnt += Counter()
+        elif elem[0] == 3:
+            result.append(cnt[elem[1]])
+    return result
 
 
 _input = """
@@ -30,4 +44,4 @@ _input = """
 
 
 """
-assert check_frequency(_input) == [[1, 5], [1, 6], [3, 2], [1, 10], [1, 10], [1, 6], [2, 5], [3, 2]]
+assert check_frequency(_input) == [0,0]

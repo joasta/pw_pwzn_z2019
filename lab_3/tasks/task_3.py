@@ -13,12 +13,12 @@ Na 1pkt. Uzupełnij funkcję sort_dates, która przyjmuje dwa parametry:
 Zwraca listę posortowanych obiektów typu datetime w strefie czasowej UTC.
 
 Funkcje group_dates oraz format_day mają pomoc w grupowaniu kodu.
-UWAGA: Proszę ograniczyć użycie pętli do minimum.
+UWAGA: Proszę ograniczyć użycie pętli do minimum. (do 4, można poza tym map i filter)
 """
 import datetime
+from itertools import groupby
 
-
-def sort_dates(date_str, date_format=''):
+def sort_dates(date_str, date_format='%a %d %B %Y %H:%M:%S %z'):
     """
     Parses and sorts given message to list of datetimes objects descending.
 
@@ -29,6 +29,12 @@ def sort_dates(date_str, date_format=''):
     :return: sorted desc list of utc datetime objects
     :rtype: list
     """
+    dates_list = date_str.strip().splitlines()
+    dates_list = list(map(lambda x: datetime.datetime.strptime(x, date_format), dates_list))
+    zone = datetime.timezone(datetime.timedelta())
+    dates_list = list(map(lambda x: x.astimezone(zone), dates_list))
+    dates_list.sort(reverse=True)
+    return dates_list
 
 
 def group_dates(dates):
@@ -37,8 +43,17 @@ def group_dates(dates):
 
     :param dates: List of dates to group.
     :type dates: list
-    :return:
+    :return: parsed events as a message
+    :rtype: str
     """
+    message=""
+    for day, events in groupby(dates, lambda x: x.date()):
+        if message is not "":
+            message += "\n----\n"
+        events=list(events)
+        events = list(map(lambda x: x.time(), events))
+        message += format_day(day,events)
+    return message
 
 
 def format_day(day, events):
@@ -52,10 +67,13 @@ def format_day(day, events):
     :return: parsed message for day
     :rtype: str
     """
-    pass
+    message = (f"{str(day)}\n")
+    events= list(map(lambda x: (f"\t{str(x)}"), events))
+    message += '\n'.join(events)
+    return message
 
 
-def parse_dates(date_str, date_format=''):
+def parse_dates(date_str, date_format='%a %d %B %Y %H:%M:%S %z'):
     """
     Parses and groups (in UTC) given list of events.
 
@@ -66,7 +84,9 @@ def parse_dates(date_str, date_format=''):
     :return: parsed events
     :rtype: str
     """
-    pass
+    sorted_list = sort_dates(date_str, date_format)
+    message = group_dates(sorted_list)
+    return message
 
 
 dates = """

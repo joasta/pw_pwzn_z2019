@@ -1,10 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\lab_1",
-    "\\lab_2",
-    "\\lab_2\\tasks"
+    "\\lab_2\\solutions",
+    "\\lab_2\\tasks",
+    "\\lab_3",
+    "\\lab_3\\tasks"
   ],
-  "SelectedNode": "\\lab_2\\tasks\\task_1.py",
+  "SelectedNode": "\\lab_3\\tasks\\task_3.py",
   "PreviewInSolutionExplorer": false
 }
