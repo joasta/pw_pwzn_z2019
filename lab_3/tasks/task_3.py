@@ -13,7 +13,7 @@ Na 1pkt. Uzupełnij funkcję sort_dates, która przyjmuje dwa parametry:
 Zwraca listę posortowanych obiektów typu datetime w strefie czasowej UTC.
 
 Funkcje group_dates oraz format_day mają pomoc w grupowaniu kodu.
-UWAGA: Proszę ograniczyć użycie pętli do minimum. (do 4, można poza tym map i filter)
+UWAGA: Proszę ograniczyć użycie pętli do minimum.
 """
 import datetime
 from itertools import groupby
@@ -30,16 +30,16 @@ def sort_dates(date_str, date_format='%a %d %B %Y %H:%M:%S %z'):
     :rtype: list
     """
     dates_list = date_str.strip().splitlines()
-    dates_list = list(map(lambda x: datetime.datetime.strptime(x, date_format), dates_list))
-    zone = datetime.timezone(datetime.timedelta())
-    dates_list = list(map(lambda x: x.astimezone(zone), dates_list))
+    dates_list = list(map(lambda x: datetime.datetime.strptime(x, date_format), dates_list)) #convert to datetime
+    zone = datetime.timezone.utc
+    dates_list = list(map(lambda x: x.astimezone(zone), dates_list)) #convert to UTC
     dates_list.sort(reverse=True)
     return dates_list
 
 
 def group_dates(dates):
     """
-    Groups list of given days day by day.
+    Groups list of given days day by day. Combines daily messages.
 
     :param dates: List of dates to group.
     :type dates: list
@@ -50,7 +50,7 @@ def group_dates(dates):
     for day, events in groupby(dates, lambda x: x.date()):
         if message is not "":
             message += "\n----\n"
-        events=list(events)
+        events = list(events)
         events = list(map(lambda x: x.time(), events))
         message += format_day(day,events)
     return message
