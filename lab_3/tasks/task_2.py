@@ -35,6 +35,7 @@ def check_frequency(input):
 _input = """
 1 5
 1 6
+2 1
 3 2
 1 10
 1 10
@@ -44,4 +45,5 @@ _input = """
 
 
 """
-assert check_frequency(_input) == [0,0]
+if __name__ == '__main__':
+    assert check_frequency(_input) == [0,0]
