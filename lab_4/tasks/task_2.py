@@ -9,12 +9,18 @@ oraz metodę fabryki korzystającą z metody statycznej tworzącej nowy wektor
 z dwóch punktów.
 Wszystkie metody sprawdzają wymiar.
 """
-
+from math import sqrt
 
 class Vector:
-    dim = None  # Wymiar vectora
+    _dim = None  # Wymiar vectora
     def __init__(self, *args):
-        raise NotImplemented
+        self.vec = tuple(args)
+        self._dim = len(args)
+        print(self._dim)
+
+    @property
+    def dim(self):
+        return self._dim
 
     @staticmethod
     def calculate_vector(beg, end):
@@ -28,7 +34,8 @@ class Vector:
         :return: Calculated vector
         :rtype: tuple
         """
-        raise NotImplemented
+        new_vec = tuple([dos-uno for uno, dos in zip(beg, end)])
+        return new_vec
 
     @classmethod
     def from_points(cls, beg, end):
@@ -43,16 +50,64 @@ class Vector:
         :return: New vector
         :rtype: tuple
         """
-        raise NotImplemented
+        if len(beg)==len(end):
+            brand_new_vec = cls.calculate_vector(beg, end)
+            return cls(*brand_new_vec)
+        else:
+            raise ValueError("Wrong Dimensions!")
+
+    def __len__(self):
+        leng = sum([dimension*dimension for dimension in self.vec])
+        leng = sqrt(leng)
+        return int(leng)
+
+    def __add__(self, other):
+        if isinstance(other,self.__class__):
+            if other._dim == self._dim:
+                result = [o+s for o,s in zip(other.vec,self.vec)]
+                return Vector(*result)
+            else:
+                raise ValueError("Wrong Dimensions!")
+        else:
+            raise NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other,self.__class__):
+            if other._dim == self._dim:
+                result = [o-s for o,s in zip(other.vec,self.vec)]
+                return Vector(*result)
+            else:
+                raise ValueError("Wrong Dimensions!")
+        else:
+            raise NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other,self.__class__):
+            if other._dim == self._dim:
+                result = sum([o*s for o,s in zip(other.vec,self.vec)])
+                return result
+            else:
+                raise ValueError("Wrong Dimensions!")
+        if isinstance(other,int):
+            result = [other*s for s in self.vec]
+            return Vector(*result)
+        else:
+            raise NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other,self.__class__):
+            return other.vec == self.vec
+        else:
+            raise NotImplemented
 
 
 if __name__ == '__main__':
     v1 = Vector(1,2,3)
-    v2 = Vector(1,2,3)
+    v2 = Vector(1,2,3,4)
     assert v1 + v2 == Vector(2,4,6)
     assert v1 - v2 == Vector(0,0,0)
     assert v1 * 2 == Vector(2,4,6)
     assert v1 * v2 == 14
-    assert len(Vector(3,4)) == 5.
+    assert len(Vector(3,4)) == 5. #float?
     assert Vector.calculate_vector([0, 0, 0], [1,2,3]) == (1,2,3)
-    assert Vector.from_points([0, 0, 0], [1,2,3]) == Vector(1,2,3)
+    assert Vector.from_points([0, 0, 0], [2,2,3]) == Vector(2,2,3)

@@ -10,7 +10,6 @@ użyj wartość z pamięci kalkulatora. Obsłuż przypadki skrajne.
 
 class Calculator:
     def __init__(self):
-        self._memory = None
         # Podpowiedz: użyj atrybutu do przechowywania wyniku
         # ostatniej wykonanej operacji, tak by metoda memorize przypisywała
         # wynik zapisany w tym atrybucie
