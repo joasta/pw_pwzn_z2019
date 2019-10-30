@@ -12,6 +12,10 @@ Wszystkie metody sprawdzają wymiar.
 from math import sqrt
 
 class Vector:
+    @property
+    def len(self):
+        raise NotImplemented
+
     _dim = None  # Wymiar vectora
     def __init__(self, *args):
         self.vec = tuple(args)
@@ -103,11 +107,13 @@ class Vector:
 
 if __name__ == '__main__':
     v1 = Vector(1,2,3)
-    v2 = Vector(1,2,3,4)
+    v2 = Vector(1,2,3)
     assert v1 + v2 == Vector(2,4,6)
     assert v1 - v2 == Vector(0,0,0)
     assert v1 * 2 == Vector(2,4,6)
     assert v1 * v2 == 14
-    assert len(Vector(3,4)) == 5. #float?
+    assert len(Vector(3,4)) == 2
+    assert Vector(3,4).dim == 2
+    assert Vector(3,4).len == 5.
     assert Vector.calculate_vector([0, 0, 0], [1,2,3]) == (1,2,3)
-    assert Vector.from_points([0, 0, 0], [2,2,3]) == Vector(2,2,3)
+    assert Vector.from_points([0, 0, 0], [1,2,3]) == Vector(1,2,3)
