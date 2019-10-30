@@ -12,19 +12,21 @@ Wszystkie metody sprawdzają wymiar.
 from math import sqrt
 
 class Vector:
-    @property
-    def len(self):
-        raise NotImplemented
 
     _dim = None  # Wymiar vectora
     def __init__(self, *args):
         self.vec = tuple(args)
         self._dim = len(args)
-        print(self._dim)
 
     @property
     def dim(self):
         return self._dim
+
+    @property
+    def len(self):
+        leng = sum([dimension*dimension for dimension in self.vec])
+        leng = sqrt(leng)
+        return leng
 
     @staticmethod
     def calculate_vector(beg, end):
@@ -61,9 +63,7 @@ class Vector:
             raise ValueError("Wrong Dimensions!")
 
     def __len__(self):
-        leng = sum([dimension*dimension for dimension in self.vec])
-        leng = sqrt(leng)
-        return int(leng)
+        return len(self.vec)
 
     def __add__(self, other):
         if isinstance(other,self.__class__):
