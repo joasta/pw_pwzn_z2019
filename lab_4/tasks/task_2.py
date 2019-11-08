@@ -17,6 +17,7 @@ class Vector:
     def __init__(self, *args):
         self.vec = tuple(args)
         self._dim = len(args)
+        print("aaaaaa kotki 2")
 
     @property
     def dim(self):

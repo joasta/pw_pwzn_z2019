@@ -55,8 +55,8 @@ class Calculator:
         self._memory = self._short_memory
 
     def clean_memory(self):
-        self._memory = None
         """Cleans memorized value"""
+        self._memory = None
 
     def in_memory(self):
         """Prints memorized value."""
