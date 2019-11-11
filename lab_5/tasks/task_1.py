@@ -8,21 +8,21 @@ jak i operację z argumentem domyślnym) - EmptyMemory
 - dzielenie przez zero jest przekształcane w CalculatorError
 """
 from operator import add, mul, sub, truediv
-
+from numbers import Number
 
 class CalculatorError(Exception):
     pass
 
 
-class WrongOperation(Exception):
+class WrongOperation(CalculatorError):
     pass
 
 
-class NotNumberArgument(Exception):
+class NotNumberArgument(CalculatorError):
     pass
 
 
-class EmptyMemory(Exception):
+class EmptyMemory(CalculatorError):
     pass
 
 
@@ -41,7 +41,6 @@ class Calculator:
     def run(self, operator, arg1, arg2=None):
         """
         Returns result of given operation.
-
         :param operator: sign of operation to perform
         :type operator: str
         :param arg1: first argument, must be a numeric value
@@ -51,11 +50,25 @@ class Calculator:
         :return: result of operation
         :rtype: float
         """
-        if operator in self.operations:
-            arg2 = arg2 or self.memory
-            if arg2:
+        
+        arg2 = self.memory or arg2
+        if arg2 is not None:
+            try:
                 self._short_memory = self.operations[operator](arg1, arg2)
                 return self._short_memory
+            except ZeroDivisionError as exc:
+                raise CalculatorError from exc
+            except Exception as exc:
+                if operator not in self.operations:
+                    raise WrongOperation from exc
+                elif not isinstance(arg1, Number) or not isinstance(arg2, Number):
+                    raise NotNumberArgument from exc
+                else:
+                    print("Unhandled exception!")
+
+        else:
+            raise EmptyMemory
+
 
     @property
     def memory(self):
@@ -71,7 +84,10 @@ class Calculator:
 
     def in_memory(self):
         """Prints memorized value."""
-        print(f"Zapamiętana wartość: {self.memory}")
+        if self.memory is None:
+            raise EmptyMemory
+        else:
+            print(f"Zapamiętana wartość: {self.memory}")
 
 
 if __name__ == '__main__':

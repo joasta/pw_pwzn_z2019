@@ -17,7 +17,7 @@ class Vector:
     def __init__(self, *args):
         self.vec = tuple(args)
         self._dim = len(args)
-        print("aaaaaa kotki 2")
+        #print("aaaaaa kotki 2")
 
     @property
     def dim(self):
@@ -25,7 +25,7 @@ class Vector:
 
     @property
     def len(self):
-        leng = sum([dimension*dimension for dimension in self.vec])
+        leng = sum(dimension*dimension for dimension in self.vec)
         leng = sqrt(leng)
         return leng
 
@@ -41,7 +41,7 @@ class Vector:
         :return: Calculated vector
         :rtype: tuple
         """
-        new_vec = tuple([dos-uno for uno, dos in zip(beg, end)])
+        new_vec = tuple(dos-uno for uno, dos in zip(beg, end))
         return new_vec
 
     @classmethod
@@ -89,7 +89,7 @@ class Vector:
     def __mul__(self, other):
         if isinstance(other,self.__class__):
             if other._dim == self._dim:
-                result = sum([o*s for o,s in zip(other.vec,self.vec)])
+                result = sum(o*s for o,s in zip(other.vec,self.vec))
                 return result
             else:
                 raise ValueError("Wrong Dimensions!")
