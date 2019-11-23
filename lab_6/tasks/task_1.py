@@ -53,7 +53,6 @@ def select_animals(input_path, output_path, compressed=False):
         for elem in a:
             regex = r'([0-9a-z\-]+)(?:,)([0-9\.]+)(?: )([Mmk]{,1}g)(?:,)(\w+)(?:,)(\w+)(?:,)(\w+)(?:\n?)'
             match = re.search(regex, elem)
-            #print(match.groups())
             
             id = match.group(1)
             weight = float(match.group(2))
@@ -85,21 +84,21 @@ def select_animals(input_path, output_path, compressed=False):
             
             sign = ['M','F']
 
-            for ele in sorted(anima.keys()):
-                if anima[ele][0][4] < anima[ele][1][4]: order=(0,1)
+            for speci in sorted(anima.keys()):
+                if anima[speci][0][4] < anima[speci][1][4]: order=(0,1)
                 else: order=(1,0)
                 
                 if compressed is False:
-                    for which in order:
-                        for next in anima[ele][which]:
-                            result += next + ","
-                            if next is anima[ele][which][1]: result = result[:-1] + " "
+                    for gend in order:
+                        for next in anima[speci][gend]:
+                            if next is anima[speci][gend][1]: result += next + " "
+                            else: result += next + ","
                         result = result[:-1] + "\n"
                 else:
-                    for which in order:
-                        result += anima[ele][which][0] +"_"
-                        result += sign[which] + "_"
-                        num = float(anima[ele][which][1])*units[anima[ele][which][2]]
+                    for gend in order:
+                        result += anima[speci][gend][0] +"_"
+                        result += sign[gend] + "_"
+                        num = float(anima[speci][gend][1])*units[anima[speci][gend][2]]
                         result += '%.3e' % Decimal(num) + "\n"
 
             myResult.write(result)
