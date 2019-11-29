@@ -222,3 +222,15 @@ if __name__ == '__main__':
                         98.9982680433363,
                         100.00083927400149]])
     np.testing.assert_allclose(least_sq(points), (1, -1), atol=0.1)
+
+
+#> to jak stringi formatować jak nie ręcznie?
+#> co jak regex jest długim wierszem?
+#> np.newaxis
+#> shape = -1,3
+
+#> interpreter projektu w VS
+#> wirtualne środowisko z numpy
+
+#> task1 - bez forów, mnożenie macierzowe
+#> task2 - calculateneighbours bez forów, szuka niepustych, na brzegach mają mniej sąsiadów, iterate też bez forów, korzystać z calculateneigh.
