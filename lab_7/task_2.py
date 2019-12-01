@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def calculate_neighbours(board):
     """
     Returns number of neighbours of board cells.
@@ -23,8 +22,36 @@ def calculate_neighbours(board):
     :type board: np.ndarray
     :param periodic
     """
-    pass
+    tmp_board=board*1
 
+    up=np.copy(np.roll(tmp_board, 1,0))
+    up[0,:]=0
+
+    down=np.copy(np.roll(tmp_board,-1,0))
+    down[board.shape[0]-1,:]=0
+
+    left=np.copy(np.roll(tmp_board,1,1))
+    left[:,0]=0
+
+    right=np.copy(np.roll(tmp_board,-1,1))
+    right[:,board.shape[1]-1]=0
+
+    upleft=np.copy(np.roll(left,1,0))
+    upleft[0,:]=0
+
+    upright=np.copy(np.roll(right,1,0))
+    upright[0,:]=0
+
+    downleft=np.copy(np.roll(left,-1,0))
+    downleft[board.shape[0]-1,:]=0
+
+    downright=np.copy(np.roll(right,-1,0))
+    downright[board.shape[0]-1,:]=0
+
+    neighbours = up+down+left+right
+    neighbours += upleft+upright+downleft+downright
+
+    return neighbours
 
 def iterate(board):
     """
@@ -44,7 +71,22 @@ def iterate(board):
     :return: next board state
     :rtype: np.ndarray
     """
-    pass
+    neighbours = calculate_neighbours(board)
+    tmp_board = board*1
+
+    revive = np.copy(neighbours)
+    revive[revive < 3] = 0
+    revive[revive > 3] = 0
+
+    kill = np.copy(neighbours)
+    kill[kill < 2] = 0
+    kill[kill > 3] = 0
+    
+    tmp_board[board == True] *= kill[board==True]
+    tmp_board[board == False] += revive[board==False]
+
+    result = np.array(tmp_board, dtype=bool)
+    return result
 
 
 if __name__ == '__main__':
@@ -56,21 +98,20 @@ if __name__ == '__main__':
         [False, False, False,  True, False, False],
         [False,  True,  True,  True, False,  True]
     ])
-    print(iterate(_board))
-    assert calculate_neighbours(_board) == np.array([
+
+    assert (calculate_neighbours(_board) == np.array([
         [1, 2, 2, 1, 3, 1,],
         [2, 4, 3, 4, 6, 3,],
         [3, 5, 5, 3, 4, 3,],
         [3, 3, 4, 4, 5, 2,],
         [2, 4, 6, 3, 4, 2,],
         [1, 1, 3, 2, 3, 0,],
-    ])
-    assert iterate(_board) == np.array([
-        [False, False, False, False, False, False],
+    ])).all()
+    assert (iterate(_board) == np.array([
+        [False, False, False, False,  True, False],
         [ True, False,  True, False, False,  True],
         [ True, False, False,  True, False,  True],
-        [False,  True, False, False, False,  True],
+        [ True,  True, False, False, False,  True],
         [False, False, False,  True, False, False],
-        [False, False,  True,  True, False, False],
-    ])
-
+        [False, False,  True,  True,  True, False],
+    ])).all()

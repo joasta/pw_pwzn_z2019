@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def least_sq(xy):
     """
     Fits linear function to given vector of 2D points.
@@ -17,8 +16,22 @@ def least_sq(xy):
     :type xy: np.ndarray
     :return: Tuple of fitted parameters
     """
-    pass
+    iks=xy[0,:]
+    igrek=xy[1,:]
 
+    x2 = iks*iks
+    xdoty = iks*igrek
+    sumx = np.sum(iks)
+    sumy = np.sum(igrek)
+    sumxy = np.sum(xdoty)
+    sumx2 = np.sum(x2)
+    N = iks.size
+
+    Delta = N*sumx2 - sumx*sumx
+    B = (N*sumxy-sumx*sumy)/Delta
+    A = (sumx2*sumy - sumx*sumxy)/Delta
+
+    return (A, B)
 
 if __name__ == '__main__':
     points = np.array([[0.008631342087986165,
@@ -221,16 +234,8 @@ if __name__ == '__main__':
                         98.00343145869182,
                         98.9982680433363,
                         100.00083927400149]])
-    np.testing.assert_allclose(least_sq(points), (1, -1), atol=0.1)
+    np.testing.assert_allclose(least_sq(points), (1, 1), atol=0.1)
 
-
-#> to jak stringi formatować jak nie ręcznie?
-#> co jak regex jest długim wierszem?
-#> np.newaxis
-#> shape = -1,3
 
 #> interpreter projektu w VS
 #> wirtualne środowisko z numpy
-
-#> task1 - bez forów, mnożenie macierzowe
-#> task2 - calculateneighbours bez forów, szuka niepustych, na brzegach mają mniej sąsiadów, iterate też bez forów, korzystać z calculateneigh.
