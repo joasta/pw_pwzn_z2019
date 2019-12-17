@@ -13,8 +13,6 @@ Układ klawiszy z wszystkimi elementami:
 
 | MC | 7 | 8 | 9 | + |
 
-| -- | -- | -- | -- | -- |
-
 | MR | 4 | 5 | 6 | - |
 
 | M+ | 1 | 2 | 3 | * |

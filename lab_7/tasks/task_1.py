@@ -28,8 +28,8 @@ def least_sq(xy):
     N = iks.size
 
     Delta = N*sumx2 - sumx*sumx
-    B = (N*sumxy-sumx*sumy)/Delta
-    A = (sumx2*sumy - sumx*sumxy)/Delta
+    A = (N*sumxy-sumx*sumy)/Delta
+    B = (sumx2*sumy - sumx*sumxy)/Delta
 
     return (A, B)
 

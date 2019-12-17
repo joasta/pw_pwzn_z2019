@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\lab_7"
+    "\\lab_6\\tasks",
+    "\\lab_7",
+    "\\lab_7\\tasks",
+    "\\lab_8",
+    "\\lab_8\\tasks",
+    "\\lab_8\\tasks\\tools",
+    "\\lab_9\\tasks",
+    "\\lab_9\\tools"
   ],
-  "SelectedNode": "\\lab_7\\task_1.py",
+  "SelectedNode": "\\lab_8\\tasks\\tools\\fit_funcs.py",
   "PreviewInSolutionExplorer": false
 }
