@@ -35,22 +35,40 @@ class CalculatorGUI(tk.Frame):
             tk.Button(
                 num_pad, text=num, width=5,
                 command=partial(self.update_var, num)
-            ).grid(row=ii // 3, column=(2-ii) % 3)
+            ).grid(row=ii // 3, column=(2-ii) % 3 +1)
         ii += 1
+        tk.Button(
+            num_pad, text='MC', width=5,
+            command=self.calculator.clean_memory
+        ).grid(row=0, column= 0)
+        tk.Button(
+            num_pad, text='MR', width=5,
+            command=self.memory_load
+        ).grid(row=1, column= 0)
+        tk.Button(
+            num_pad, text='M+', width=5,
+            command=self.calculator.memorize
+        ).grid(row=2, column= 0)
+        ii += 3
         tk.Button(
             num_pad, text='C', width=5,
             command=self.clear
-        ).grid(row=ii // 3, column=ii % 3)
+        ).grid(row=ii // 4, column=ii % 4)
         ii += 1
         tk.Button(
             num_pad, text='0', width=5,
             command=partial(self.update_var, '0')
-        ).grid(row=ii // 3, column=ii % 3)
+        ).grid(row=ii // 4, column=ii % 4)
+        ii += 1
+        tk.Button(
+            num_pad, text='.', width=5,
+            command=partial(self.update_var, '.')
+        ).grid(row=ii // 4, column=ii % 4)
         ii += 1
         tk.Button(
             num_pad, text='=', width=5,
             command=self.calculate_result
-        ).grid(row=ii // 3, column=ii % 3)
+        ).grid(row=ii // 4, column=ii % 4)
 
         # klawiatura operacji
         operation_pad = tk.Frame(bottom_pad)
@@ -97,12 +115,23 @@ class CalculatorGUI(tk.Frame):
 
     def calculate_result(self):
         if self.variables['var_1'] and self.variables['var_2']:
-            var_1 = int(self.variables['var_1'])
-            var_2 = int(self.variables['var_2'])
+            var_1 = float(self.variables['var_1'])
+            var_2 = float(self.variables['var_2'])
             self.screen['text'] = self.calculator.run(
                 self.variables['operator'], var_1, var_2
             )
             self.init_variables()
+
+    def memory_load(self):
+        state = self.state.get()
+        if state:
+            self.variables['var_1'] += str(self.calculator.memory)
+            self.variables['var_1'] = self.variables['var_1'].lstrip('0')
+            self.state.set(not self.state.get())
+        else:
+            self.variables['var_2'] += str(self.calculator.memory)
+            self.variables['var_2'] = self.variables['var_2'].lstrip('0')
+        self.update_screen()
 
 
 if __name__ == '__main__':
