@@ -1,13 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\lab_7\\tasks",
     "\\lab_8\\tasks",
     "\\lab_8\\tasks\\config",
     "\\lab_8\\tasks\\tools",
+    "\\lab_9",
     "\\lab_9\\tasks",
     "\\lab_9\\tools"
   ],
-  "SelectedNode": "\\lab_9",
+  "SelectedNode": "\\lab_9\\tasks\\gui_calculator.py",
   "PreviewInSolutionExplorer": false
 }

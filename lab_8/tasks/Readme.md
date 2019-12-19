@@ -1,4 +1,4 @@
-### To use the virtual environment:
+### To use the virtual environment on Windows:
 in command line interface:
 [your_path_to_repo]\pwzn\jupenv\Scripts\activate.bat
 

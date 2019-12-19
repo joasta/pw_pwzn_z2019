@@ -1,6 +1,5 @@
 import tkinter as tk
 from functools import partial
-from pynput import keyboard
 
 from lab_9.tools.calculator import Calculator
 
