@@ -1,5 +1,6 @@
 import tkinter as tk
 from functools import partial
+from pynput import keyboard
 
 from lab_9.tools.calculator import Calculator
 
@@ -17,6 +18,8 @@ class CalculatorGUI(tk.Frame):
         self.screen.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         self.bottom_pad = self.init_bottom_pad()
         self.bottom_pad.pack(side=tk.BOTTOM)
+
+        
 
     def init_variables(self):
         self.variables['var_1'] = ''
@@ -70,6 +73,8 @@ class CalculatorGUI(tk.Frame):
             command=self.calculate_result
         ).grid(row=ii // 4, column=ii % 4)
 
+        
+
         # klawiatura operacji
         operation_pad = tk.Frame(bottom_pad)
         operation_pad.pack(side=tk.RIGHT)
@@ -99,10 +104,15 @@ class CalculatorGUI(tk.Frame):
 
     def update_var(self, num):
         state = self.state.get()
+
         if state:
+            if num == "." and num in self.variables['var_1']:
+                return None
             self.variables['var_1'] += str(num)
             self.variables['var_1'] = self.variables['var_1'].lstrip('0')
         else:
+            if num == "." and num in self.variables['var_2']:
+                return None
             self.variables['var_2'] += str(num)
             self.variables['var_2'] = self.variables['var_2'].lstrip('0')
         self.update_screen()
@@ -132,9 +142,56 @@ class CalculatorGUI(tk.Frame):
             self.variables['var_2'] += str(self.calculator.memory)
             self.variables['var_2'] = self.variables['var_2'].lstrip('0')
         self.update_screen()
+        
+def keyEq(event):
+    event.widget.calculate_result()
+    
+def keyMul(event):
+    event.widget.set_operator("*")
+    
+def keyDiv(event):
+    event.widget.set_operator("/")
+    
+def keyAdd(event):
+    event.widget.set_operator("+")
+    
+def keySub(event):
+    event.widget.set_operator("-")
 
+def key(event):
+    if event.keycode == 48:
+        event.widget.update_var(0)
+    elif event.keycode == 49:
+        event.widget.update_var(1)
+    elif event.keycode == 50:
+        event.widget.update_var(2)
+    elif event.keycode == 51:
+        event.widget.update_var(3)
+    elif event.keycode == 52:
+        event.widget.update_var(4)
+    elif event.keycode == 53:
+        event.widget.update_var(5)
+    elif event.keycode == 54:
+        event.widget.update_var(6)
+    elif event.keycode == 55:
+        event.widget.update_var(7)
+    elif event.keycode == 56:
+        event.widget.update_var(8)
+    elif event.keycode == 57:
+        event.widget.update_var(9)
+    elif event.keycode == 188 or event.keycode == 190:
+        event.widget.update_var(".")
 
 if __name__ == '__main__':
     root = tk.Tk()
-    CalculatorGUI(root).pack()
+    cal = CalculatorGUI(root)
+    cal.focus_set()
+    cal.bind("<Return>", keyEq)
+    cal.bind("/", keyDiv)
+    cal.bind("*", keyMul)
+    cal.bind("+", keyAdd)
+    cal.bind("-", keySub)
+    cal.bind("<Key>", key)
+    cal.pack()
+
     root.mainloop()
