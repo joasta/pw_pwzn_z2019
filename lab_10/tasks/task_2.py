@@ -39,10 +39,7 @@ def get_city_data(
         location_url = urljoin(API_URL, f'location/{woeid}/{year}/{month}/{day}')
         try:
             response = requests.get(location_url, timeout=5)
-        except requests.exceptions.Timeout:
-            print(f'Request for: {location_url} took to long!')
-        else:
-            print(response.url)
+            #print(response.url)
             data = response.json()
             if len(data) == 0:
                 break
@@ -53,6 +50,12 @@ def get_city_data(
                     writer = csv.DictWriter(_file, delimiter=',', quotechar='"', fieldnames=data[0].keys())
                     writer.writeheader()
                     writer.writerows(data)
+        except requests.exceptions.Timeout:
+            print(f'Request for: {location_url} took to long!')
+        except requests.exceptions.HTTPError:
+            print(f'HTTP Error!')
+        except RuntimeError:
+            print(f'Runtime error!')
     
     return (str(path1), files)
 
@@ -69,8 +72,6 @@ if __name__ == '__main__':
     dir_path, file_paths = get_city_data(523920, 2017, 3, path='weather_data')
     assert len(file_paths) == 31
     assert pathlib.Path(dir_path).is_dir()
-    print(dir_path)
-    print(expected_path)
     assert expected_path == dir_path
 
     expected_path = 'weather_data/523920_2012_12'
@@ -78,5 +79,3 @@ if __name__ == '__main__':
     assert len(file_paths) == 0
     assert pathlib.Path(dir_path).is_dir()
     assert expected_path == dir_path
-
-    #errors
