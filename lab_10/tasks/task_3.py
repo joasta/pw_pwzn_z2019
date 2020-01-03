@@ -14,7 +14,6 @@ API_URL = 'https://www.metaweather.com/api/'
 def concat_data(
         path: Union[str, pathlib.Path],
 ):
-    print("start")
     #parts = str(path).rpartition('/')
     #print(parts[0])
     #print(parts[2])
