@@ -2,7 +2,8 @@
 .idea/*
 *.ipynb
 weather_data/*.csv
-523920_2017_03/*.csv
+weather_data/**/*.csv
+523920_2017_03/**.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
