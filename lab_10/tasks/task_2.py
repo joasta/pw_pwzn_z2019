@@ -17,7 +17,6 @@ def get_city_data(
     files=[]
     days = 31+1
     emptyPath = False
-    print("working...")
     
     direct = str(woeid) + "_" + str(year) + "_" + f"{month:02d}"
 

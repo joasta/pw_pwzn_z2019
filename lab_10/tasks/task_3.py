@@ -1,7 +1,7 @@
 import filecmp
 import pathlib
 from typing import Union
-from task_2 import get_city_data
+from lab_10.tasks.task_2 import get_city_data
 import datetime as dt
 
 import pandas as pd
@@ -42,18 +42,20 @@ def concat_data(
         
         for ii in range(len(meteo_date)):
             meteo_date[ii] = meteo_date[ii][:10]
-            created_date[ii] = update_date[ii][:16]
+            created_date[ii] = dt.datetime.strptime(update_date[ii], '%Y-%m-%dT%H:%M:%S.%fZ')
+            created_date[ii] = created_date[ii].strftime("%Y-%m-%dT%H:%M")
             update_date[ii] = update_date[ii][:10]
 
-        data["temp"] = meteo_date
+        data["tmp2"] = meteo_date
         data["tmp"] = update_date
         data["created"] = created_date
+        data.rename(columns={'the_temp': 'temp'}, inplace=True)
 
-        data = data.loc[data['tmp'] == data['temp']]
+        data = data.loc[data['tmp'] == data['tmp2']]
 
         data = data[['created',
 'min_temp',
-'the_temp',
+'temp',
 'max_temp',
 'air_pressure',
 'humidity',
@@ -61,9 +63,9 @@ def concat_data(
 'wind_direction_compass',
 'wind_direction',
 'wind_speed']].copy()
-        data.rename(columns={'the_temp': 'temp'}, inplace=True)
 
-        sum_date[jj]=data[::-1]
+        data.sort_values(by=['created'], inplace=True)
+        sum_date[jj]=data#[::-1]
 
     result = pd.concat(sum_date)
     result.to_csv(str(path)+".csv", sep=',', index=False)
@@ -74,9 +76,3 @@ if __name__ == '__main__':
         'expected_523920_2017_03.csv',
         'weather_data/523920_2017_03.csv'
     )
-
-
-#Dane w pliku mają być posortowane 
-#rosnąco po dacie utworzenia. Format daty pliku `yyyy-mm-ddTHH:MM`: 
-#`y`, `m`, `d`, `H`, `M` odpowiadają cyfrom roku, miesiąca, dnia, godziny, 
-#minuty , `T` jest separatorem. 
