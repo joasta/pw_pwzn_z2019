@@ -1,9 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\lab_6",
-    "\\lab_6\\tasks"
+    "\\lab_10",
+    "\\lab_10\\tasks",
+    "\\lab_6\\tasks",
+    "\\lab_9",
+    "\\lab_9\\tasks"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\lab_10\\tasks\\task_3.py",
   "PreviewInSolutionExplorer": false
 }

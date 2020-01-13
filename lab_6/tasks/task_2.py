@@ -12,28 +12,28 @@ dwuelementową tuplę zawierającą liczbę poprawnych wierszy:
 import re
 import os, sys
 import codecs
-from decimal import Decimal
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
 def check_animal_list(file_path):
-	correct=[0,0]
+    correct=[0,0]
     with codecs.open(file_path, 'r', encoding='utf8') as myFile:
         header = myFile.readline()
-		a = myFile.readlines()
-		
-		for elem in a:
-			regex = r'(?:[0-9a-z]{8,8}\-[0-9a-z]{4,4}\-[0-9a-z]{4,4}\-[0-9a-z]{4,4}\-[0-9a-z]{12,12}_)([MF])(?:_\d.\d{3,3}e\-\d\d)'
-			match = re.search(regex, elem)
-			if match is not None:
-				if match.group(1) is 'M':
-					correct[1]+=1
-				else:
-					correct[0]+=1
-	return tuple(correct)
+        a = myFile.readlines()
+        regex = r'(?:[0-9a-f]{8,8}\-[0-9a-f]{4,4}\-[0-9a-f]{4,4}\-[0-9a-f]{4,4}\-[0-9a-f]{12,12}_)([MF])(?:_\d\.\d{3,3}e[\-+]\d\d)'
+        
+        for ele in a:
+            match = re.search(regex, ele)
+            if match is not None:
+                if match.group(1) is 'M':
+                    correct[1]+=1
+                else:
+                    correct[0]+=1
+        return tuple(correct)
+
 
 
 
 if __name__ == '__main__':
-	assert check_animal_list('s_animals_sce.txt') == (2, 2)
-    assert check_animal_list('animals_sc_corrupted.txt') == (6, 0)
+    assert check_animal_list('s_animals_sce.txt') == (2, 2)
+    assert check_animal_list('animals_sc_corrupted.txt') == (5, 0)

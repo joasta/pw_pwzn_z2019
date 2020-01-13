@@ -1,6 +1,9 @@
 # Project specific
 .idea/*
 *.ipynb
+weather_data/*.csv
+weather_data/**/*.csv
+523920_2017_03/**.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -28,6 +31,7 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+jupenv/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
