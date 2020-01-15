@@ -2,11 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\lab_11",
+    "\\lab_11\\ex_tests",
     "\\lab_11\\tasks",
     "\\lab_11\\tasks\\tests",
-    "\\lab_9",
-    "\\lab_9\\tasks"
+    "\\lab_11\\tasks\\tools",
+    "\\lab_4\\tasks",
+    "\\lab_5\\tasks",
+    "\\lab_7\\tasks",
+    "\\lab_9\\tools"
   ],
-  "SelectedNode": "\\lab_11\\tasks\\tests\\tests_task1.py",
+  "SelectedNode": "\\lab_11\\ex_tests\\test_xunit.py",
   "PreviewInSolutionExplorer": false
 }
