@@ -12,82 +12,93 @@ from lab_11.tasks.tools.calculator import (
 def op_clc():
     return Calculator()
 
+@pytest.fixture
+def clc():
+    return Calculator().run("+",11,1)
+
 @pytest.mark.parametrize(
-    'operate, param_1, param_2, expected',
+    'operator, param_1, param_2, expected',
     [
-        pytest.param('+', '+', '-', '-', '/', '/', '*', '*', id='Operation'),  
-		pytest.param(3, 12, 3, 12, 3, 12, 3, 12, id='First'),  
-		pytest.param(3, 4, 3, 4, 3, 4, 3, 4, id='Second'),  
-		pytest.param(6, 16, 0, 8, 1, 3, 9, 48, id='Expect'),  
-    ],
+        ('+', 3, 3, 6),
+        ('+', 12, 4, 16),
+        ('-', 3, 3, 0),
+        ('-', 12, 4, 8),
+        ('/', 3, 3, 1),
+        ('/', 12, 4, 3),
+        ('*', 3, 3, 9),
+        ('*', 12, 4, 48)
+    ]
 )
-def test_calculation(op_clc):
-	assert op_clc.run(operate, param_1, param_2) == expected
+def test_calculation(op_clc, operator, param_1, param_2, expected):
+    assert op_clc.run(operator, param_1, param_2) == expected
 
 def test_zero_division(op_clc):
     try:
-        calc.run('/', 1, 0)
+        op_clc.run('/', 1, 0)
     except CalculatorError as exc:
         assert type(exc.__cause__) == ZeroDivisionError
     else:
         raise AssertionError
 
 def test_memorisation(op_clc):
-	op_clc.run('+', 11, 1)
-	op_clc.memorize()
-	assert op_clc.in_memory() == 12
+    op_clc.run('+', 11, 1)
+    op_clc.memorize()
+    assert op_clc.memory == 12
 
 @pytest.mark.parametrize(
-    'operate, param_1, param_2, expected',
+    'operate, param_1, expected',
     [
-        pytest.param('+', '+', '-', '-', '/', '/', '*', '*', id='Operation'),  
-		pytest.param(3, 12, 3, 12, 3, 12, 3, 12, id='First'),  
-		pytest.param(Null, Null, Null, Null, Null, Null, Null, Null, id='Second'),  
-		pytest.param(6, 15, 0, 9, 1, 4, 9, 36, id='Expect'),  
-    ],
+        ('+', 3, 6),
+        ('+', 12, 15),
+        ('-', 3, 0),
+        ('-', 12, 9),
+        ('/', 3, 1),
+        ('/', 12, 4),
+        ('*', 3, 9),
+        ('*', 12, 36)
+    ]
 )
-def test_recall(op_clc):
-	op_clc.run('+', 11, 1)
-	op_clc.memorize()
-	assert op_clc.run(operate, param_1) == expected
+def test_recall(op_clc, operate, param_1, expected):
+    op_clc.run('+', 2, 1)
+    op_clc.memorize()
+    assert op_clc.run(operate, param_1) == expected
 
 def test_missing_memory(op_clc):
-	try:
+    try:
         op_clc.in_memory()
     except CalculatorError as exc:
         assert type(exc) is EmptyMemory
     else:
         raise AssertionError
 
-def test_missing_memory(op_clc):
-	try:
-        op_clc.run(operate, param_1)
+def test_missing_memory2(op_clc):
+    try:
+        op_clc.run("-", 2)
     except CalculatorError as exc:
         assert type(exc) is EmptyMemory
     else:
         raise AssertionError
 
 def test_wrong_operator(op_clc):
-	try:
+    try:
         a = op_clc.run('^', 2, 3)
     except CalculatorError as exc:
         assert type(exc) == WrongOperation
-        assert a is None
     else:
         raise AssertionError
 
 @pytest.mark.parametrize(
-	'param_1, param_2',
-	[ 
-		pytest.param(3, '12', '3', id='First'),  
-		pytest.param('4', 3, 'Null', id='Second'), 
-	],
+    'param_1, param_2',
+    [
+        (3, 'a'),
+        ('dwa', 3),
+        ('3', 'No')
+    ],
 )
-def test_wrong_type(op_clc):
-	try:
+def test_wrong_type(op_clc, param_1, param_2):
+    try:
         b = op_clc.run('+', param_1, param_2)
     except CalculatorError as exc:
         assert type(exc) == NotNumberArgument
-        assert b is None
     else:
         raise AssertionError
