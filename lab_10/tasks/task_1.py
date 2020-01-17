@@ -28,6 +28,6 @@ if __name__ == '__main__':
         'Newark': 2459269,
     }
     try:
-        get_cities_woeid('Warszawa', 0.1)
+        get_cities_woeid('Warszawa', 0.01)
     except Exception as exc:
         isinstance(exc, requests.exceptions.Timeout)
