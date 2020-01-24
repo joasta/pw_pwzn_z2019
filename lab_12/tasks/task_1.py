@@ -1,5 +1,17 @@
 def generate_fibonacci(n=100):
-    pass
+    zwrotka = []
+    num=0
+    if not isinstance(n, int) or n<1 or n>100:
+        raise RuntimeError
+    while num < n:
+        if num <= 1:
+            zwrotka.append(num)
+            yield num
+        else:
+            zwrotka.append(zwrotka[num-1] + zwrotka[num-2])
+            yield zwrotka[num]
+        num += 1
+
 
 
 if __name__ == '__main__':
