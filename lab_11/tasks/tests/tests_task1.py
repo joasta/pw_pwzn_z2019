@@ -30,6 +30,7 @@ def clc():
     ]
 )
 def test_calculation(op_clc, operator, param_1, param_2, expected):
+    raise RuntimeError
     assert op_clc.run(operator, param_1, param_2) == expected
 
 def test_zero_division(op_clc):
