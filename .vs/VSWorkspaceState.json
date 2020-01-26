@@ -1,11 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BookClub",
-    "\\lab_11\\tasks",
-    "\\lab_11\\tasks\\tests",
+    "\\lab_6",
     "\\lab_6\\tasks"
   ],
-  "SelectedNode": "\\BookClub",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
